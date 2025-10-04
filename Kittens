@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me – Lily's Posh Finds</title>
+</head>
+<body style="font-family: sans-serif; padding: 2rem; max-width: 800px; margin: auto; line-height: 1.6; background-color: #fff7f9;">
+
+  <nav style="text-align: center; margin-bottom: 2rem;">
+    <a href="index.html" style="margin-right: 20px;">Home</a>
+    <a href="about.html" style="font-weight: bold;">About</a>
+  </nav>
+
+  <h1 style="text-align: center; color: #d6336c;">🐾 About Me</h1>
+
+  <p>Hi! I’m Lily, the person behind <strong>Lily’s Posh Finds</strong>.</p>
+
+  <p>This shop is more than just a place to find cute fashion — it’s also a way for me to give back. Every week, I donate part of my proceeds to help support kittens in need, including supplies like food, litter, toys, and cozy bedding for fosters and rescues.</p>
+
+  <p>I’ve always had a soft spot for animals, and since starting this shop, I’ve made it part of my mission to use it as a small force for good. If you’ve ever bought from me — thank you. You’ve helped a kitten somewhere stay safe, fed, and warm. 🐱💗</p>
+
+  <p>I’m based in <strong>Martinsville, VA</strong>, and I also offer local pickup for those nearby. Feel free to <a href="index.html#contact">reach out</a> if you’re interested in learning more about the kittens I support or just want to say hi!</p>
+
+</body>
+</html>
