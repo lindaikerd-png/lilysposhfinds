@@ -31,18 +31,30 @@
   <p>Curated fashion treasures at affordable prices. New finds added often.</p>
   <a class="button" href="https://poshmark.com/closet/lilysposhfinds" target="_blank">Shop My Poshmark</a>
   <p>Local pickup available! Contact me for details.</p>
-<form action="https://formspree.io/f/https://formspree.io/f/xldplgrq" method="POST">
-  <label for="name">Name:</label><br />
-  <input type="text" name="name" required /><br /><br />
+<!-- Contact Form Section -->
+<section id="contact" style="max-width: 600px; margin: auto; padding: 2rem; font-family: sans-serif;">
+  <h2 style="text-align: center;">Contact Me</h2>
+  <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
+    
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required
+           style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;" />
 
-  <label for="phone">Phone Number:</label><br />
-  <input type="tel" name="phone" /><br /><br />
+    <label for="phone">Phone Number:</label><br />
+    <input type="tel" id="phone" name="phone"
+           style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;" />
 
-  <label for="email">Email:</label><br />
-  <input type="email" name="email" required /><br /><br />
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required
+           style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;" />
 
-  <label for="message">Message:</label><br />
-  <textarea name="message" rows="5" required></textarea><br /><br />
+    <label for="message">Message:</label><br />
+    <textarea id="message" name="message" rows="5" required
+              style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
 
-  <button type="submit">Send Message</button>
-</form>
+    <button type="submit"
+            style="background-color: #333; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">
+      Send Message
+    </button>
+  </form>
+</section>
