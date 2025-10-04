@@ -32,4 +32,25 @@
   <a class="button" href="https://poshmark.com/closet/lilysposhfinds" target="_blank">Shop My Poshmark</a>
   <p>Local pickup available! Contact me for details.</p>
 </body>
+  <!-- Contact Form -->
+<section id="contact" style="max-width: 500px; margin: auto; font-family: sans-serif;">
+  <h2>Contact Me</h2>
+  <form id="contactForm">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required /><br /><br />
+
+    <label for="phone">Phone Number:</label><br />
+    <input type="tel" id="phone" name="phone" placeholder="e.g. (555) 123‑4567" /><br /><br />
+
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required /><br /><br />
+
+    <label for="message">Message:</label><br />
+    <textarea id="message" name="message" rows="5" required></textarea><br /><br />
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <p id="formResponse" style="color: green; font-weight: bold; display: none;">Thanks! Your message was sent.</p>
+</section>
 </html>
