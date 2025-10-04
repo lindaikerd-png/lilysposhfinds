@@ -15,28 +15,19 @@
       font-family: 'Quicksand', sans-serif;
       text-align: center;
       padding: 50px;
-      background: #EBDCFB; /* LILAC BACKGROUND */
+      background: #EBDCFB; /* Lilac background */
       margin: 0;
-      color: #ffffff; /* White text */
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.25); /* soft shadow */
-    }
-
-    /* Fancy gradient title */
-    .fancy-title {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3rem;
-      background: linear-gradient(90deg, #d6a5ff, #a07be4); /* lilac to purple */
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: none; /* no shadow on gradient text */
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-
-    h2, h3 {
-      font-family: 'Quicksand', sans-serif;
       color: #ffffff;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+    }
+
+    /* Ombre gradient for all headers */
+    h1, h2, h3 {
+      font-family: 'Great Vibes', cursive;
+      background: linear-gradient(90deg, #d6a5ff, #a07be4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
     }
 
     a.button {
@@ -70,7 +61,7 @@
     }
 
     input, textarea {
-      color: #000; /* input text stays black for readability */
+      color: #000;
       background-color: #fff;
     }
 
@@ -87,7 +78,7 @@
     <a href="kittens.html" style="text-decoration: underline; color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.25);">Learn more</a>
   </p>
 
-  <h1 class="fancy-title">Welcome to Lily's Posh Finds!</h1>
+  <h1>Welcome to Lily's Posh Finds!</h1>
   <p>Curated fashion treasures at affordable prices. New finds added often.</p>
   <a class="button" href="https://poshmark.com/closet/lilysposhfinds" target="_blank">Shop My Poshmark</a>
   <p>Local pickup available! In the City of Martinsville. Contact me for details.</p>
@@ -97,35 +88,35 @@
     <h2>🛍️ Featured Items</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
       
-      <!-- Strawberry Earrings Card -->
+      <!-- Strawberry Earrings -->
       <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; color: #000; text-shadow: none;">
         <a href="https://poshmark.com/listing/Cute-Strawberry-Enamel-Drop-Earrings-18K-Gold-Plated-Hoops-686d6c1647842ce446b014ee" target="_blank" style="text-decoration: none; color: inherit;">
           <img src="Screenshot%202025-10-04%20162102.png" alt="Strawberry Earrings" style="width: 100%; object-fit: cover;" />
           <div style="padding: 1rem;">
-            <h3 style="color:#000; text-shadow:none;">Strawberry Earrings</h3>
-            <p style="color: #888; text-shadow:none;">View on Poshmark →</p>
+            <h3>Strawberry Earrings</h3>
+            <p style="color: #888; text-shadow: none;">View on Poshmark →</p>
           </div>
         </a>
       </div>
 
-      <!-- Amethyst Earrings Card -->
+      <!-- Amethyst Earrings -->
       <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; color: #000; text-shadow: none;">
         <a href="https://poshmark.com/listing/Amethyst-Purple-Stone-Beaded-Dangle-Earrings-68c78df2b6af92f10d18bc99" target="_blank" style="text-decoration: none; color: inherit;">
           <img src="amethyst-earrings.jpg" alt="Amethyst Earrings" style="width: 100%; object-fit: cover;" />
           <div style="padding: 1rem;">
-            <h3 style="color:#000; text-shadow:none;">Amethyst Earrings</h3>
-            <p style="color: #888; text-shadow:none;">View on Poshmark →</p>
+            <h3>Amethyst Earrings</h3>
+            <p style="color: #888; text-shadow: none;">View on Poshmark →</p>
           </div>
         </a>
       </div>
 
-      <!-- Macrame Handbag Card -->
+      <!-- Macrame Handbag -->
       <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; color: #000; text-shadow: none;">
         <a href="https://poshmark.com/listing/Handmade-Blue-Cream-Macrame-Tote-Bag-with-Bamboo-Handles-68d328cfb7f0ac2372ed4590" target="_blank" style="text-decoration: none; color: inherit;">
           <img src="Macrame%20Handbag.png" alt="Macrame Handbag" style="width: 100%; object-fit: cover;" />
           <div style="padding: 1rem;">
-            <h3 style="color:#000; text-shadow:none;">Macrame Handbag</h3>
-            <p style="color: #888; text-shadow:none;">View on Poshmark →</p>
+            <h3>Macrame Handbag</h3>
+            <p style="color: #888; text-shadow: none;">View on Poshmark →</p>
           </div>
         </a>
       </div>
@@ -157,7 +148,7 @@
 
   <!-- Music Player Section -->
   <section id="music">
-    <p>🎵 Vibe with me while you browse!</p>
+    <h2>🎵 Vibe with me while you browse!</h2>
     <audio controls style="width: 90%; max-width: 500px;">
       <source src="background.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
