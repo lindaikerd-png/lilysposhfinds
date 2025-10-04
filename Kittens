@@ -3,24 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Me – Lily's Posh Finds</title>
+  <title>About the Kittens</title>
 </head>
-<body style="font-family: sans-serif; padding: 2rem; max-width: 800px; margin: auto; line-height: 1.6; background-color: #fff7f9;">
+<body style="font-family: sans-serif; max-width: 800px; margin: auto; padding: 2rem;">
 
+  <!-- Navigation -->
   <nav style="text-align: center; margin-bottom: 2rem;">
-    <a href="index.html" style="margin-right: 20px;">Home</a>
-    <a href="about.html" style="font-weight: bold;">About</a>
+    <a href="index.html" style="margin-right: 20px;">← Back to Home</a>
   </nav>
 
-  <h1 style="text-align: center; color: #d6336c;">🐾 About Me</h1>
+  <!-- About the Kittens -->
+  <section style="text-align: center;">
+    <h1>🐱 About the Kittens</h1>
 
-  <p>Hi! I’m Lily, the person behind <strong>Lily’s Posh Finds</strong>.</p>
+    <p style="font-size: 1.1rem; line-height: 1.6; margin-top: 1rem;">
+      Lily’s Posh Finds isn’t just about affordable, curated fashion — it’s also about giving back.  
+      A portion of every sale is donated to a <strong>local nonprofit organization supporting rescue kittens</strong> and their caretakers.
+    </p>
 
-  <p>This shop is more than just a place to find cute fashion — it’s also a way for me to give back. Every week, I donate part of my proceeds to help support kittens in need, including supplies like food, litter, toys, and cozy bedding for fosters and rescues.</p>
+    <p style="font-size: 1.1rem; line-height: 1.6;">
+      This nonprofit provides food, vet care, toys, and safe spaces for kittens in need.  
+      By shopping here, you’re directly helping fund these efforts and making a difference in the lives of vulnerable animals.
+    </p>
 
-  <p>I’ve always had a soft spot for animals, and since starting this shop, I’ve made it part of my mission to use it as a small force for good. If you’ve ever bought from me — thank you. You’ve helped a kitten somewhere stay safe, fed, and warm. 🐱💗</p>
-
-  <p>I’m based in <strong>Martinsville, VA</strong>, and I also offer local pickup for those nearby. Feel free to <a href="index.html#contact">reach out</a> if you’re interested in learning more about the kittens I support or just want to say hi!</p>
+    <p style="font-size: 1.1rem; line-height: 1.6;">
+      Thank you for supporting this mission — together, we’re making small but meaningful changes for the tiniest paws. 🐾💗
+    </p>
+  </section>
 
 </body>
 </html>
