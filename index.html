@@ -213,6 +213,7 @@
     </audio>
   </section>
 <canvas id="snakeGame" width="400" height="400" style="position: fixed; bottom: 20px; right: 20px; border: 2px solid #555; z-index: 9999; background: #fff;"></canvas>
+
 <script>
   const canvas = document.getElementById("snakeGame");
   const ctx = canvas.getContext("2d");
@@ -260,7 +261,7 @@
 
   function gameLoop() {
     if (checkCollision()) {
-      alert(\"Game over! Score: \" + score);
+      alert("Game over! Score: " + score);
       snake = [{ x: 160, y: 160 }];
       dx = gridSize;
       dy = 0;
@@ -273,16 +274,13 @@
     drawSnake();
   }
 
-  document.addEventListener(\"keydown\", e => {
-    if (e.key === \"ArrowUp\" && dy === 0) { dx = 0; dy = -gridSize; }
-    else if (e.key === \"ArrowDown\" && dy === 0) { dx = 0; dy = gridSize; }
-    else if (e.key === \"ArrowLeft\" && dx === 0) { dx = -gridSize; dy = 0; }
-    else if (e.key === \"ArrowRight\" && dx === 0) { dx = gridSize; dy = 0; }
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -gridSize; }
+    else if (e.key === "ArrowDown" && dy === 0) { dx = 0; dy = gridSize; }
+    else if (e.key === "ArrowLeft" && dx === 0) { dx = -gridSize; dy = 0; }
+    else if (e.key === "ArrowRight" && dx === 0) { dx = gridSize; dy = 0; }
   });
 
   placeFood();
   setInterval(gameLoop, 100);
 </script>
-
-</body>
-</html>
