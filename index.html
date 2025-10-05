@@ -212,6 +212,77 @@
       Your browser does not support the audio element.
     </audio>
   </section>
+<canvas id="snakeGame" width="400" height="400" style="position: fixed; bottom: 20px; right: 20px; border: 2px solid #555; z-index: 9999; background: #fff;"></canvas>
+<script>
+  const canvas = document.getElementById("snakeGame");
+  const ctx = canvas.getContext("2d");
+  const gridSize = 20;
+  let snake = [{ x: 160, y: 160 }];
+  let dx = gridSize;
+  let dy = 0;
+  let food = { x: 0, y: 0 };
+  let score = 0;
+
+  function getRandomCoord() {
+    return Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
+  }
+
+  function placeFood() {
+    food = { x: getRandomCoord(), y: getRandomCoord() };
+  }
+
+  function drawSnake() {
+    ctx.fillStyle = "#4CAF50";
+    snake.forEach(part => ctx.fillRect(part.x, part.y, gridSize, gridSize));
+  }
+
+  function drawFood() {
+    ctx.fillStyle = "#FF4081";
+    ctx.fillRect(food.x, food.y, gridSize, gridSize);
+  }
+
+  function moveSnake() {
+    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+    snake.unshift(head);
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      placeFood();
+    } else {
+      snake.pop();
+    }
+  }
+
+  function checkCollision() {
+    const [head, ...body] = snake;
+    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) return true;
+    return body.some(part => part.x === head.x && part.y === head.y);
+  }
+
+  function gameLoop() {
+    if (checkCollision()) {
+      alert(\"Game over! Score: \" + score);
+      snake = [{ x: 160, y: 160 }];
+      dx = gridSize;
+      dy = 0;
+      score = 0;
+      placeFood();
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    moveSnake();
+    drawFood();
+    drawSnake();
+  }
+
+  document.addEventListener(\"keydown\", e => {
+    if (e.key === \"ArrowUp\" && dy === 0) { dx = 0; dy = -gridSize; }
+    else if (e.key === \"ArrowDown\" && dy === 0) { dx = 0; dy = gridSize; }
+    else if (e.key === \"ArrowLeft\" && dx === 0) { dx = -gridSize; dy = 0; }
+    else if (e.key === \"ArrowRight\" && dx === 0) { dx = gridSize; dy = 0; }
+  });
+
+  placeFood();
+  setInterval(gameLoop, 100);
+</script>
 
 </body>
 </html>
