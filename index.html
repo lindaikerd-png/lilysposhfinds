@@ -230,7 +230,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -245,14 +245,15 @@
     }
 
     #startBtn {
-      padding: 12px 24px;
-      font-size: 1.2rem;
-      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      border-radius: 6px;
       background-color: #28a745;
       color: white;
       border: none;
-      margin: 16px;
+      margin: 12px;
       cursor: pointer;
+      transition: background 0.2s ease;
     }
 
     #startBtn:hover {
@@ -320,6 +321,16 @@
     const gridSize = 20;
     let snake, dx, dy, food, score, gameLoop;
 
+    function lockScroll() {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function unlockScroll() {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
     function initGame() {
       snake = [{ x: 160, y: 160 }];
       dx = gridSize;
@@ -369,6 +380,7 @@
     function updateGame() {
       if (checkCollision()) {
         clearInterval(gameLoop);
+        unlockScroll();
         alert("Game over! Score: " + score);
         return;
       }
@@ -382,6 +394,7 @@
     function startGame() {
       initGame();
       clearInterval(gameLoop);
+      lockScroll();
       gameLoop = setInterval(updateGame, 100);
     }
 
