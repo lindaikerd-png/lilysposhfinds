@@ -215,109 +215,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snake Game</title>
   <style>
     body {
       margin: 0;
-      background-color: #222;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       overflow: hidden;
-      font-family: sans-serif;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
     }
 
     canvas {
-      background-color: #000;
-      border: 4px solid #555;
-    }
-
-    .controls {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .control-btn {
-      width: 60px;
-      height: 60px;
-      background: #444;
-      color: white;
-      font-size: 24px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .control-btn:active {
-      background: #666;
-    }
-
-    #game-over {
-      color: white;
-      font-size: 1.5rem;
-      margin-top: 20px;
-      display: none;
+      border: 4px solid #fff;
+      background: #000;
+      display: block;
     }
 
     #startBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 18px;
-      border: none;
+      padding: 12px 24px;
+      font-size: 1.2rem;
       border-radius: 8px;
-      background-color: #4CAF50;
+      background-color: #28a745;
       color: white;
+      border: none;
+      margin: 16px;
       cursor: pointer;
+    }
+
+    #startBtn:hover {
+      background-color: #218838;
+    }
+
+    #mobileControls {
+      display: none;
+      margin-top: 16px;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mobile-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mobile-btn {
+      background: #555;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 16px;
+      font-size: 1.2rem;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .mobile-btn:active {
+      background: #777;
+    }
+
+    @media (max-width: 768px) {
+      #mobileControls {
+        display: flex;
+      }
     }
   </style>
 </head>
 <body>
+  <h1>Snake Game</h1>
+  <canvas id="game" width="400" height="400"></canvas>
+  <button id="startBtn">Start Game</button>
 
-  <canvas id="gameCanvas" width="400" height="400"></canvas>
-  <div id="game-over">Game Over! Score: <span id="finalScore"></span></div>
-  <button id="startBtn">Play Snake</button>
-
-  <div class="controls">
-    <div class="row">
-      <button class="control-btn" onclick="setDirection('up')">⬆️</button>
-    </div>
-    <div class="row">
-      <button class="control-btn" onclick="setDirection('left')">⬅️</button>
-      <button class="control-btn" onclick="setDirection('down')">⬇️</button>
-      <button class="control-btn" onclick="setDirection('right')">➡️</button>
+  <!-- Mobile Touch Controls -->
+  <div id="mobileControls">
+    <div class="mobile-btn" onclick="setDirection('up')">⬆️</div>
+    <div class="mobile-row">
+      <div class="mobile-btn" onclick="setDirection('left')">⬅️</div>
+      <div class="mobile-btn" onclick="setDirection('down')">⬇️</div>
+      <div class="mobile-btn" onclick="setDirection('right')">➡️</div>
     </div>
   </div>
 
   <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const startBtn = document.getElementById("startBtn");
+
     const gridSize = 20;
-    const startBtn = document.getElementById('startBtn');
-    const gameOverText = document.getElementById('game-over');
-    const finalScoreEl = document.getElementById('finalScore');
+    let snake, dx, dy, food, score, gameLoop;
 
-    let snake, food, dx, dy, gameLoop, score;
-
-    function resetGame() {
-      snake = [{x: 200, y: 200}];
+    function initGame() {
+      snake = [{ x: 160, y: 160 }];
       dx = gridSize;
       dy = 0;
-      placeFood();
       score = 0;
-      gameOverText.style.display = 'none';
+      placeFood();
     }
 
     function placeFood() {
@@ -328,18 +336,19 @@
     }
 
     function drawSnake() {
-      ctx.fillStyle = '#0f0';
+      ctx.fillStyle = "#4CAF50";
       snake.forEach(part => ctx.fillRect(part.x, part.y, gridSize, gridSize));
     }
 
     function drawFood() {
-      ctx.fillStyle = '#f00';
+      ctx.fillStyle = "#FF4081";
       ctx.fillRect(food.x, food.y, gridSize, gridSize);
     }
 
     function moveSnake() {
-      const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
       snake.unshift(head);
+
       if (head.x === food.x && head.y === food.y) {
         score++;
         placeFood();
@@ -352,52 +361,47 @@
       const [head, ...body] = snake;
       if (
         head.x < 0 || head.x >= canvas.width ||
-        head.y < 0 || head.y >= canvas.height ||
-        body.some(part => part.x === head.x && part.y === head.y)
-      ) {
-        return true;
-      }
-      return false;
+        head.y < 0 || head.y >= canvas.height
+      ) return true;
+      return body.some(part => part.x === head.x && part.y === head.y);
     }
 
-    function loop() {
+    function updateGame() {
       if (checkCollision()) {
         clearInterval(gameLoop);
-        finalScoreEl.textContent = score;
-        gameOverText.style.display = 'block';
+        alert("Game over! Score: " + score);
         return;
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       moveSnake();
-      drawSnake();
       drawFood();
+      drawSnake();
     }
 
-    function setDirection(direction) {
-      if (direction === 'up' && dy === 0) {
-        dx = 0; dy = -gridSize;
-      } else if (direction === 'down' && dy === 0) {
-        dx = 0; dy = gridSize;
-      } else if (direction === 'left' && dx === 0) {
-        dx = -gridSize; dy = 0;
-      } else if (direction === 'right' && dx === 0) {
-        dx = gridSize; dy = 0;
-      }
+    function startGame() {
+      initGame();
+      clearInterval(gameLoop);
+      gameLoop = setInterval(updateGame, 100);
     }
 
-    document.addEventListener('keydown', e => {
+    function setDirection(dir) {
+      if (dir === 'up' && dy === 0) { dx = 0; dy = -gridSize; }
+      else if (dir === 'down' && dy === 0) { dx = 0; dy = gridSize; }
+      else if (dir === 'left' && dx === 0) { dx = -gridSize; dy = 0; }
+      else if (dir === 'right' && dx === 0) { dx = gridSize; dy = 0; }
+    }
+
+    document.addEventListener("keydown", e => {
+      e.preventDefault();
       const key = e.key;
-      if (key === 'ArrowUp') setDirection('up');
-      else if (key === 'ArrowDown') setDirection('down');
-      else if (key === 'ArrowLeft') setDirection('left');
-      else if (key === 'ArrowRight') setDirection('right');
+      if (key === "ArrowUp") setDirection('up');
+      else if (key === "ArrowDown") setDirection('down');
+      else if (key === "ArrowLeft") setDirection('left');
+      else if (key === "ArrowRight") setDirection('right');
     });
 
-    startBtn.addEventListener('click', () => {
-      resetGame();
-      gameLoop = setInterval(loop, 100);
-    });
+    startBtn.addEventListener("click", startGame);
   </script>
 </body>
 </html>
