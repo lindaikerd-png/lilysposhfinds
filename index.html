@@ -212,17 +212,31 @@
       Your browser does not support the audio element.
     </audio>
   </section>
-<!-- Snake Game Canvas (hidden initially) -->
-<canvas id="snakeGame" width="400" height="400" style="display: none; position: fixed; bottom: 70px; right: 20px; border: 2px solid #555; z-index: 9999; background: #fff;"></canvas>
+<!-- Snake Game Canvas -->
+<canvas id="snakeGame" width="400" height="400"
+  style="display:none; position:fixed; bottom:80px; right:20px; border:2px solid #555; z-index:9999; background:#fff;">
+</canvas>
 
-<!-- Game Controls -->
-<div id="gameControls" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
-  <button id="playSnakeBtn" style="background: #4CAF50; color: white; border: none; padding: 12px 16px; border-radius: 6px; cursor: pointer; margin-right: 10px;">
+<!-- Game Buttons -->
+<div id="gameControls" style="position:fixed; bottom:20px; right:20px; z-index:10000;">
+  <button id="playSnakeBtn" style="background:#4CAF50;color:white;border:none;padding:12px 16px;border-radius:6px;cursor:pointer;margin-right:10px;">
     🎮 Play Snake
   </button>
-  <button id="stopSnakeBtn" style="background: #f44336; color: white; border: none; padding: 12px 16px; border-radius: 6px; cursor: pointer; display: none;">
+  <button id="stopSnakeBtn" style="background:#f44336;color:white;border:none;padding:12px 16px;border-radius:6px;cursor:pointer;display:none;">
     ⏹ Stop Snake
   </button>
+</div>
+
+<!-- Mobile Touch Controls -->
+<div id="touchControls" style="display:none; position:fixed; bottom:100px; right:20px; z-index:10000;">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <button onclick="setDirection('up')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬆️</button>
+    <div style="display:flex;">
+      <button onclick="setDirection('left')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬅️</button>
+      <button onclick="setDirection('down')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬇️</button>
+      <button onclick="setDirection('right')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">➡️</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -230,6 +244,7 @@
   const ctx = canvas.getContext("2d");
   const playBtn = document.getElementById("playSnakeBtn");
   const stopBtn = document.getElementById("stopSnakeBtn");
+  const touchControls = document.getElementById("touchControls");
 
   const gridSize = 20;
   let snake, dx, dy, food, score, gameInterval;
@@ -294,6 +309,9 @@
     canvas.style.display = "block";
     playBtn.style.display = "none";
     stopBtn.style.display = "inline-block";
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      touchControls.style.display = "block"; // show touch controls on mobile
+    }
     initGame();
     gameInterval = setInterval(gameLoop, 100);
   }
@@ -301,28 +319,26 @@
   function stopGame() {
     clearInterval(gameInterval);
     canvas.style.display = "none";
+    touchControls.style.display = "none";
     playBtn.style.display = "inline-block";
     stopBtn.style.display = "none";
   }
 
+  function setDirection(dir) {
+    if (dir === "up" && dy === 0) { dx = 0; dy = -gridSize; }
+    else if (dir === "down" && dy === 0) { dx = 0; dy = gridSize; }
+    else if (dir === "left" && dx === 0) { dx = -gridSize; dy = 0; }
+    else if (dir === "right" && dx === 0) { dx = gridSize; dy = 0; }
+  }
+
+  // Desktop arrow keys
   document.addEventListener("keydown", e => {
-    if (e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -gridSize; }
-    else if (e.key === "ArrowDown" && dy === 0) { dx = 0; dy = gridSize; }
-    else if (e.key === "ArrowLeft" && dx === 0) { dx = -gridSize; dy = 0; }
-    else if (e.key === "ArrowRight" && dx === 0) { dx = gridSize; dy = 0; }
+    if (e.key === "ArrowUp") setDirection("up");
+    else if (e.key === "ArrowDown") setDirection("down");
+    else if (e.key === "ArrowLeft") setDirection("left");
+    else if (e.key === "ArrowRight") setDirection("right");
   });
 
   playBtn.addEventListener("click", startGame);
   stopBtn.addEventListener("click", stopGame);
 </script>
-<!-- Mobile Touch Controls -->
-<div id="touchControls" style="display: none; position: fixed; bottom: 90px; right: 20px; z-index: 10000;">
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <button onclick="setDirection('up')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬆️</button>
-    <div style="display: flex;">
-      <button onclick="setDirection('left')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬅️</button>
-      <button onclick="setDirection('down')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬇️</button>
-      <button onclick="setDirection('right')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">➡️</button>
-    </div>
-  </div>
-</div>
