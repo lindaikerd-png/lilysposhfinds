@@ -212,108 +212,192 @@
       Your browser does not support the audio element.
     </audio>
   </section>
-<!-- Snake Game Container -->
-<section id="snakeGameSection" style="margin-top: 3rem;">
-  <h2>🐍 Play Snake!</h2>
-  <canvas id="snakeCanvas" width="400" height="400" style="border:1px solid #333; background: #fff;"></canvas>
-  <div style="margin-top: 1rem;">
-    <button onclick="startSnakeGame()" style="padding: 10px 20px; margin: 5px;">▶️ Start</button>
-    <button onclick="stopSnakeGame()" style="padding: 10px 20px; margin: 5px;">⏹️ Stop</button>
-  </div>
-
-  <!-- Mobile Touch Controls -->
-  <div id="touchControls" style="margin-top: 1rem;">
-    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-      <button onclick="setDirection('up')" style="width: 60px; height: 60px; font-size: 24px;">⬆️</button>
-    </div>
-    <div style="display: flex; justify-content: center; gap: 20px;">
-      <button onclick="setDirection('left')" style="width: 60px; height: 60px; font-size: 24px;">⬅️</button>
-      <button onclick="setDirection('down')" style="width: 60px; height: 60px; font-size: 24px;">⬇️</button>
-      <button onclick="setDirection('right')" style="width: 60px; height: 60px; font-size: 24px;">➡️</button>
-    </div>
-  </div>
-</section>
-
-<script>
-  const canvas = document.getElementById("snakeCanvas");
-  const ctx = canvas.getContext("2d");
-
-  let snake, food, dx, dy, gridSize = 20, interval;
-
-  function initSnake() {
-    snake = [{ x: 200, y: 200 }];
-    dx = gridSize;
-    dy = 0;
-    placeFood();
-  }
-
-  function placeFood() {
-    food = {
-      x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
-      y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize
-    };
-  }
-
-  function drawGame() {
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw snake
-    ctx.fillStyle = "#333";
-    snake.forEach(part => ctx.fillRect(part.x, part.y, gridSize, gridSize));
-
-    // Draw food
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, gridSize, gridSize);
-  }
-
-  function moveSnake() {
-    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-
-    // Game over conditions
-    if (
-      head.x < 0 || head.x >= canvas.width ||
-      head.y < 0 || head.y >= canvas.height ||
-      snake.some(p => p.x === head.x && p.y === head.y)
-    ) {
-      stopSnakeGame();
-      alert("Game Over!");
-      return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: sans-serif;
     }
 
-    snake.unshift(head);
-    if (head.x === food.x && head.y === food.y) {
+    canvas {
+      background-color: #000;
+      border: 4px solid #555;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .control-btn {
+      width: 60px;
+      height: 60px;
+      background: #444;
+      color: white;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .control-btn:active {
+      background: #666;
+    }
+
+    #game-over {
+      color: white;
+      font-size: 1.5rem;
+      margin-top: 20px;
+      display: none;
+    }
+
+    #startBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="game-over">Game Over! Score: <span id="finalScore"></span></div>
+  <button id="startBtn">Play Snake</button>
+
+  <div class="controls">
+    <div class="row">
+      <button class="control-btn" onclick="setDirection('up')">⬆️</button>
+    </div>
+    <div class="row">
+      <button class="control-btn" onclick="setDirection('left')">⬅️</button>
+      <button class="control-btn" onclick="setDirection('down')">⬇️</button>
+      <button class="control-btn" onclick="setDirection('right')">➡️</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 20;
+    const startBtn = document.getElementById('startBtn');
+    const gameOverText = document.getElementById('game-over');
+    const finalScoreEl = document.getElementById('finalScore');
+
+    let snake, food, dx, dy, gameLoop, score;
+
+    function resetGame() {
+      snake = [{x: 200, y: 200}];
+      dx = gridSize;
+      dy = 0;
       placeFood();
-    } else {
-      snake.pop();
+      score = 0;
+      gameOverText.style.display = 'none';
     }
 
-    drawGame();
-  }
+    function placeFood() {
+      food = {
+        x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
+        y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize
+      };
+    }
 
-  function startSnakeGame() {
-    stopSnakeGame(); // Clear previous game
-    initSnake();
-    drawGame();
-    interval = setInterval(moveSnake, 120);
-  }
+    function drawSnake() {
+      ctx.fillStyle = '#0f0';
+      snake.forEach(part => ctx.fillRect(part.x, part.y, gridSize, gridSize));
+    }
 
-  function stopSnakeGame() {
-    clearInterval(interval);
-  }
+    function drawFood() {
+      ctx.fillStyle = '#f00';
+      ctx.fillRect(food.x, food.y, gridSize, gridSize);
+    }
 
-  function setDirection(dir) {
-    if (dir === "up" && dy === 0) { dx = 0; dy = -gridSize; }
-    else if (dir === "down" && dy === 0) { dx = 0; dy = gridSize; }
-    else if (dir === "left" && dx === 0) { dx = -gridSize; dy = 0; }
-    else if (dir === "right" && dx === 0) { dx = gridSize; dy = 0; }
-  }
+    function moveSnake() {
+      const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        placeFood();
+      } else {
+        snake.pop();
+      }
+    }
 
-  // Keyboard controls
-  document.addEventListener("keydown", e => {
-    if (e.key === "ArrowUp" && dy === 0) setDirection("up");
-    else if (e.key === "ArrowDown" && dy === 0) setDirection("down");
-    else if (e.key === "ArrowLeft" && dx === 0) setDirection("left");
-    else if (e.key === "ArrowRight" && dx === 0) setDirection("right");
-  });
-</script>
+    function checkCollision() {
+      const [head, ...body] = snake;
+      if (
+        head.x < 0 || head.x >= canvas.width ||
+        head.y < 0 || head.y >= canvas.height ||
+        body.some(part => part.x === head.x && part.y === head.y)
+      ) {
+        return true;
+      }
+      return false;
+    }
+
+    function loop() {
+      if (checkCollision()) {
+        clearInterval(gameLoop);
+        finalScoreEl.textContent = score;
+        gameOverText.style.display = 'block';
+        return;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      moveSnake();
+      drawSnake();
+      drawFood();
+    }
+
+    function setDirection(direction) {
+      if (direction === 'up' && dy === 0) {
+        dx = 0; dy = -gridSize;
+      } else if (direction === 'down' && dy === 0) {
+        dx = 0; dy = gridSize;
+      } else if (direction === 'left' && dx === 0) {
+        dx = -gridSize; dy = 0;
+      } else if (direction === 'right' && dx === 0) {
+        dx = gridSize; dy = 0;
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      const key = e.key;
+      if (key === 'ArrowUp') setDirection('up');
+      else if (key === 'ArrowDown') setDirection('down');
+      else if (key === 'ArrowLeft') setDirection('left');
+      else if (key === 'ArrowRight') setDirection('right');
+    });
+
+    startBtn.addEventListener('click', () => {
+      resetGame();
+      gameLoop = setInterval(loop, 100);
+    });
+  </script>
+</body>
+</html>
