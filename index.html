@@ -212,7 +212,13 @@
       Your browser does not support the audio element.
     </audio>
   </section>
-<canvas id="snakeGame" width="400" height="400" style="position: fixed; bottom: 20px; right: 20px; border: 2px solid #555; z-index: 9999; background: #fff;"></canvas>
+<!-- Snake Game Canvas (hidden by default) -->
+<canvas id="snakeGame" width="400" height="400" style="display: none; position: fixed; bottom: 70px; right: 20px; border: 2px solid #555; z-index: 9999; background: #fff;"></canvas>
+
+<!-- Play Snake Button -->
+<button id="playSnakeBtn" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; background: #4CAF50; color: white; border: none; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+  🎮 Play Snake
+</button>
 
 <script>
   const canvas = document.getElementById("snakeGame");
@@ -223,6 +229,7 @@
   let dy = 0;
   let food = { x: 0, y: 0 };
   let score = 0;
+  let gameInterval = null;
 
   function getRandomCoord() {
     return Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
@@ -281,6 +288,11 @@
     else if (e.key === "ArrowRight" && dx === 0) { dx = gridSize; dy = 0; }
   });
 
-  placeFood();
-  setInterval(gameLoop, 100);
+  // Start on click
+  document.getElementById("playSnakeBtn").addEventListener("click", () => {
+    canvas.style.display = "block";
+    document.getElementById("playSnakeBtn").style.display = "none"; // hide the button after starting
+    placeFood();
+    gameInterval = setInterval(gameLoop, 100);
+  });
 </script>
