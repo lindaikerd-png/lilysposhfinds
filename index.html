@@ -315,3 +315,14 @@
   playBtn.addEventListener("click", startGame);
   stopBtn.addEventListener("click", stopGame);
 </script>
+<!-- Mobile Touch Controls -->
+<div id="touchControls" style="display: none; position: fixed; bottom: 90px; right: 20px; z-index: 10000;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <button onclick="setDirection('up')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬆️</button>
+    <div style="display: flex;">
+      <button onclick="setDirection('left')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬅️</button>
+      <button onclick="setDirection('down')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">⬇️</button>
+      <button onclick="setDirection('right')" style="background:#333;color:#fff;padding:10px;border:none;border-radius:6px;margin:2px;">➡️</button>
+    </div>
+  </div>
+</div>
